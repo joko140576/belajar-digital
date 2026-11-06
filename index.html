@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Belajar Komponen Website</title>
+<style>
+:root{--bg:#f6f7fb;--sf:#fff;--tx:#1b1f2a;--mu:#5d6475;--bd:#e1e4ee;--ac:#4f46e5;--ac2:#eef0ff;--ok:#16a34a;--wr:#d97706;--er:#dc2626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1220;--sf:#181c2f;--tx:#e8eaf3;--mu:#9aa1b8;--bd:#2a3050;--ac:#818cf8;--ac2:#23284a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1220;--sf:#181c2f;--tx:#e8eaf3;--mu:#9aa1b8;--bd:#2a3050;--ac:#818cf8;--ac2:#23284a;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--sf);border-bottom:1px solid var(--bd);padding:12px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+header b{font-size:1.05rem}
+.wrap{display:flex;max-width:1200px;margin:0 auto}
+nav{width:210px;flex:none;position:sticky;top:60px;align-self:flex-start;max-height:calc(100vh - 70px);overflow:auto;padding:16px 8px 16px 16px}
+nav a{display:block;padding:5px 10px;border-radius:8px;color:var(--mu);text-decoration:none;font-size:.9rem}
+nav a:hover{background:var(--ac2);color:var(--ac)}
+main{flex:1;min-width:0;padding:20px}
+.intro h1{margin:0 0 4px}.intro p{color:var(--mu);margin:0 0 20px}
+.sec{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:20px;margin-bottom:18px}
+.sec h2{margin:0;font-size:1.25rem}.sec h2 small{color:var(--ac);font-weight:600;margin-right:6px}
+.def{color:var(--mu);margin:6px 0 14px}
+.demo{border:1px dashed var(--bd);border-radius:10px;padding:16px;background:var(--bg);overflow-x:auto;position:relative}
+.demo .lbl{display:block;margin-bottom:14px;font-size:.75rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.08em}
+button,.btn{font:inherit;cursor:pointer;border:1px solid var(--ac);background:var(--ac);color:#fff;padding:8px 16px;border-radius:8px}
+button.o{background:transparent;color:var(--ac)}button.g{background:var(--ac2);border-color:var(--ac2);color:var(--ac)}button.d{background:var(--er);border-color:var(--er)}
+input,textarea,select{font:inherit;color:var(--tx);background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;width:100%;max-width:340px}
+input[type=checkbox],input[type=radio]{width:auto}
+label{display:block;margin:8px 0 4px;font-size:.9rem}label.i{display:inline-flex;gap:6px;align-items:center;margin-right:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.card{border:1px solid var(--bd);background:var(--sf);border-radius:12px;overflow:hidden;max-width:280px}
+.card i{display:block;height:90px;background:linear-gradient(135deg,#6366f1,#ec4899)}.card div{padding:12px}.card h4{margin:0 0 4px}.card p{margin:0 0 10px;color:var(--mu);font-size:.9rem}
+.hero{text-align:center;padding:36px 16px;border-radius:12px;background:linear-gradient(135deg,#4f46e5,#9333ea);color:#fff}.hero h3{margin:0 0 6px;font-size:1.6rem}.hero p{margin:0 0 14px;opacity:.9}.hero button{background:#fff;color:#4f46e5;border-color:#fff}
+.badge{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.78rem;font-weight:600;background:var(--ac2);color:var(--ac);margin-right:6px}.badge.ok{background:#dcfce7;color:#166534}.badge.er{background:#fee2e2;color:#991b1b}.badge.wr{background:#fef3c7;color:#92400e}
+.al{padding:10px 14px;border-radius:8px;border-left:4px solid;margin-bottom:8px}.al.ok{background:#dcfce7;border-color:var(--ok);color:#14532d}.al.er{background:#fee2e2;border-color:var(--er);color:#7f1d1d}.al.wr{background:#fef3c7;border-color:var(--wr);color:#78350f}.al.in{background:#dbeafe;border-color:#2563eb;color:#1e3a8a}
+.stage{position:relative;min-height:240px;overflow:hidden;border-radius:10px}.ov{position:absolute;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:5;padding:12px;border-radius:10px}.ov.on{display:flex}
+.mo{background:var(--sf);border-radius:14px;padding:22px;max-width:380px;width:100%}.mo h3{margin-top:0}
+.tt{position:relative;display:inline-block;cursor:help;border-bottom:1px dotted var(--ac)}.tt::after{content:attr(data-tip);position:absolute;bottom:130%;left:50%;transform:translateX(-50%);background:#1b1f2a;color:#fff;padding:4px 10px;border-radius:6px;font-size:.8rem;white-space:nowrap;opacity:0;pointer-events:none;transition:.15s}.tt:hover::after{opacity:1}
+details.dd{position:relative;display:inline-block}details.dd summary{list-style:none;cursor:pointer;border:1px solid var(--bd);background:var(--sf);padding:8px 14px;border-radius:8px}
+details.dd div{position:absolute;top:110%;left:0;background:var(--sf);border:1px solid var(--bd);border-radius:8px;min-width:160px;z-index:5;box-shadow:0 8px 20px rgba(0,0,0,.15)}details.dd a{display:block;padding:8px 14px;color:var(--tx);text-decoration:none}details.dd a:hover{background:var(--ac2)}
+.pg button{padding:6px 12px;margin-right:4px;background:var(--sf);color:var(--tx);border-color:var(--bd)}.pg button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.bc a{color:var(--ac);text-decoration:none}.bc span{color:var(--mu);margin:0 6px}
+details.ac{border:1px solid var(--bd);border-radius:8px;margin-bottom:6px;background:var(--sf)}details.ac summary{padding:10px 14px;cursor:pointer;font-weight:600}details.ac p{margin:0;padding:0 14px 12px;color:var(--mu)}
+.tabs{display:flex;border-bottom:1px solid var(--bd);gap:4px}.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--mu);border-radius:0}.tabs button.on{color:var(--ac);border-color:var(--ac)}.tp{display:none;padding:12px 4px}.tp.on{display:block}
+table{border-collapse:collapse;width:100%;background:var(--sf)}th,td{padding:8px 12px;border-bottom:1px solid var(--bd);text-align:left}th{background:var(--ac2);color:var(--ac)}
+.bar{height:12px;background:var(--bd);border-radius:99px;overflow:hidden;max-width:380px}.bar i{display:block;height:100%;width:65%;background:var(--ac);border-radius:99px}
+.sp{width:34px;height:34px;border:4px solid var(--bd);border-top-color:var(--ac);border-radius:50%;animation:r 1s linear infinite;display:inline-block}@keyframes r{to{transform:rotate(360deg)}}
+#toast{position:absolute;right:12px;bottom:12px;background:#1b1f2a;color:#fff;padding:12px 18px;border-radius:10px;opacity:0;transform:translateY(10px);transition:.25s;z-index:60;pointer-events:none}#toast.on{opacity:1;transform:none}
+.bell{position:relative;display:inline-block;font-size:1.6rem}.bell em{position:absolute;top:-4px;right:-8px;background:var(--er);color:#fff;font-size:.7rem;font-style:normal;border-radius:99px;padding:0 6px}
+.menu{display:flex;gap:4px;background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:6px;flex-wrap:wrap}.menu a{padding:6px 14px;border-radius:8px;color:var(--tx);text-decoration:none}.menu a:hover,.menu a.on{background:var(--ac2);color:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}.grid div,.gl div{background:var(--ac2);color:var(--ac);border-radius:8px;padding:18px 0;text-align:center;font-weight:700}
+.cont{max-width:420px;margin:auto;border:2px dashed var(--ac);padding:12px;text-align:center;border-radius:8px;color:var(--ac)}
+.tl{border-left:3px solid var(--ac);margin-left:8px;padding-left:18px}.tl div{position:relative;margin-bottom:14px}.tl div::before{content:"";position:absolute;left:-26px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--ac)}.tl b{display:block}.tl small{color:var(--mu)}
+.gl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:420px}.gl div{cursor:zoom-in;padding:34px 0;color:#fff}
+.lg{max-width:320px;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px}.lg h4{margin:0 0 6px}.lg input{max-width:none}
+.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}.dash>div{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:12px}.dash small{color:var(--mu)}.dash b{display:block;font-size:1.4rem}
+.star{font-size:1.8rem;color:var(--bd);cursor:pointer;user-select:none}.star.on{color:#f59e0b}
+@media(max-width:760px){nav{display:none}}
+</style>
+</head>
+<body>
+<header><b>📚 Belajar Komponen Website</b><button class="g" data-act="theme">🌓 Tema</button></header>
+<div class="wrap"><nav id="nav"></nav>
+<main><div class="intro"><h1>Komponen Website</h1><p>39 komponen UI: tiap bagian berisi definisi singkat dan contoh yang bisa dicoba langsung.</p></div><div id="app"></div></main></div>
+
+
+
+<script>
+const g=["#6366f1,#ec4899","#06b6d4,#3b82f6","#f59e0b,#ef4444","#10b981,#06b6d4","#8b5cf6,#ec4899","#f97316,#eab308"];
+const S=[
+["Hero","Bagian paling atas halaman yang berisi pesan utama, ajakan bertindak (CTA), dan sering kali gambar besar.",`<div class="hero"><h3>Belajar Web Jadi Mudah</h3><p>Kuasai komponen UI dalam satu halaman.</p><button>Mulai Sekarang</button></div>`],
+["Card","Kotak berisi informasi ringkas yang terkelompok, biasanya berisi gambar, judul, teks, dan tombol.",`<div class="card"><i></i><div><h4>Judul Kartu</h4><p>Deskripsi singkat isi kartu.</p><button>Lihat</button></div></div>`],
+["Button","Elemen interaktif yang dipakai pengguna untuk menjalankan aksi, seperti mengirim atau menghapus.",`<div class="row"><button>Primary</button><button class="o">Outline</button><button class="g">Soft</button><button class="d">Hapus</button><button disabled>Nonaktif</button></div>`],
+["Badge","Label kecil untuk menandai status, kategori, atau jumlah.",`<span class="badge">Baru</span><span class="badge ok">Aktif</span><span class="badge wr">Menunggu</span><span class="badge er">Gagal</span>`],
+["Alert","Pesan penting yang ditampilkan langsung di halaman untuk memberi info, peringatan, atau hasil aksi.",`<div class="al in">ℹ️ Informasi: sistem akan diperbarui malam ini.</div><div class="al ok">✅ Data berhasil disimpan.</div><div class="al wr">⚠️ Kuota hampir habis.</div><div class="al er">❌ Gagal terhubung ke server.</div>`],
+["Modal","Jendela dialog yang muncul di atas konten dan meminta perhatian pengguna sebelum melanjutkan.",`<div class="stage"><button type="button" onclick="document.getElementById('modal').classList.add('on')">Buka Modal</button><div class="ov" id="modal"><div class="mo"><h3>Judul Modal</h3><p>Ini adalah jendela dialog yang muncul di tengah layar, di atas konten lain.</p><button type="button" onclick="document.getElementById('modal').classList.remove('on')">Tutup</button></div></div></div>`],
+["Tooltip","Teks bantuan kecil yang muncul saat kursor diarahkan ke suatu elemen.",`<span class="tt" data-tip="Ini adalah tooltip!">Arahkan kursor ke sini</span>`],
+["Form","Wadah yang mengelompokkan kolom isian untuk mengumpulkan data dari pengguna lalu mengirimnya.",`<div><label>Nama</label><input placeholder="Nama lengkap"><label>Email</label><input type="email" placeholder="email@contoh.com"><br><br><button>Kirim</button></div>`],
+["Dropdown","Daftar pilihan yang terbuka ke bawah ketika sebuah tombol atau label diklik.",`<div style="min-height:150px"><details class="dd"><summary>Menu ▾</summary><div><a href="#dropdown">Profil</a><a href="#dropdown">Pengaturan</a><a href="#dropdown">Keluar</a></div></details></div>`],
+["Input","Kolom isian satu baris untuk teks, angka, tanggal, kata sandi, dan lainnya.",`<div class="row"><input type="text" placeholder="Teks"><input type="password" placeholder="Kata sandi"><input type="date"></div>`],
+["Textarea","Kolom isian banyak baris untuk teks panjang seperti komentar atau pesan.",`<textarea rows="3" placeholder="Tulis pesanmu di sini..."></textarea>`],
+["Select","Kontrol untuk memilih satu opsi dari daftar yang sudah ditentukan.",`<select><option>Pilih kota</option><option>Jakarta</option><option>Bandung</option><option>Surabaya</option></select>`],
+["Checkbox","Kotak centang yang memungkinkan memilih nol, satu, atau banyak opsi.",`<label class="i"><input type="checkbox" checked> HTML</label><label class="i"><input type="checkbox"> CSS</label><label class="i"><input type="checkbox"> JavaScript</label>`],
+["Radio Button","Pilihan bulat yang hanya mengizinkan satu opsi terpilih dalam satu grup.",`<label class="i"><input type="radio" name="r" checked> Laki-laki</label><label class="i"><input type="radio" name="r"> Perempuan</label>`],
+["Pagination","Navigasi untuk membagi konten panjang menjadi beberapa halaman.",`<div class="pg" id="pg"></div>`],
+["Breadcrumb","Jejak navigasi yang menunjukkan posisi halaman saat ini dalam hierarki situs.",`<div class="bc"><a href="#breadcrumb">Beranda</a><span>›</span><a href="#breadcrumb">Produk</a><span>›</span><b>Sepatu</b></div>`],
+["Accordion","Daftar panel yang bisa dibuka dan ditutup untuk menampilkan atau menyembunyikan isi.",`<details class="ac" open><summary>Apa itu HTML?</summary><p>Bahasa markup untuk menyusun struktur halaman web.</p></details><details class="ac"><summary>Apa itu CSS?</summary><p>Bahasa untuk mengatur tampilan dan tata letak.</p></details><details class="ac"><summary>Apa itu JavaScript?</summary><p>Bahasa pemrograman yang membuat halaman interaktif.</p></details>`],
+["Tabs","Navigasi yang memisahkan konten ke beberapa panel, hanya satu yang tampil pada satu waktu.",`<div class="tabs" id="tabs"><button class="on" data-tab="0">HTML</button><button data-tab="1">CSS</button><button data-tab="2">JS</button></div><div class="tp on">HTML menyusun struktur.</div><div class="tp">CSS mengatur tampilan.</div><div class="tp">JS menambah interaksi.</div>`],
+["Table","Susunan data dalam baris dan kolom agar mudah dibandingkan.",`<table><tr><th>Nama</th><th>Peran</th><th>Status</th></tr><tr><td>Ayu</td><td>Desainer</td><td><span class="badge ok">Aktif</span></td></tr><tr><td>Budi</td><td>Developer</td><td><span class="badge wr">Cuti</span></td></tr></table>`],
+["List","Kumpulan item yang berurutan (ol) atau tidak berurutan (ul).",`<div class="row" style="align-items:flex-start;gap:40px"><ul><li>Apel</li><li>Jeruk</li><li>Mangga</li></ul><ol><li>Buka editor</li><li>Tulis kode</li><li>Jalankan</li></ol></div>`],
+["Search Bar","Kolom khusus untuk mencari konten dengan mengetik kata kunci.",`<div class="row"><input type="search" placeholder="🔍 Cari sesuatu..."><button>Cari</button></div>`],
+["Progress Bar","Indikator visual yang menunjukkan seberapa jauh suatu proses sudah selesai.",`<div class="bar"><i></i></div><small>65% selesai</small>`],
+["Spinner / Loader","Animasi berputar yang menandakan konten sedang dimuat.",`<span class="sp"></span>`],
+["Toast","Pesan singkat yang muncul sementara di pojok layar lalu hilang sendiri.",`<div class="stage" style="min-height:110px"><button data-act="toast">Tampilkan Toast</button><div id="toast">✅ Berhasil disimpan!</div></div>`],
+["Notification","Pemberitahuan tentang aktivitas baru, sering berupa ikon lonceng dengan angka.",`<span class="bell">🔔<em>3</em></span>`],
+["Menu","Daftar tautan navigasi utama untuk berpindah antarhalaman atau bagian.",`<div class="menu"><a class="on" href="#menu">Beranda</a><a href="#menu">Tentang</a><a href="#menu">Layanan</a><a href="#menu">Kontak</a></div>`],
+["Grid","Tata letak berbasis baris dan kolom untuk menyusun elemen secara rapi dan responsif.",`<div class="grid"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div></div>`],
+["Container","Pembungkus yang membatasi lebar konten dan menempatkannya di tengah halaman.",`<div class="cont">Konten dibatasi lebar maksimum dan rata tengah</div>`],
+["Section","Pembagian halaman menjadi bagian bertema, biasanya dengan judul sendiri.",`<div class="card" style="max-width:none"><div><h4>📌 Tentang Kami</h4><p>Setiap section memuat satu topik: hero, fitur, harga, kontak, dan seterusnya.</p></div></div>`],
+["Divider","Garis pemisah yang membedakan satu bagian dari bagian lain.",`<p>Atas</p><hr style="border:0;border-top:1px solid var(--bd)"><p>Bawah</p>`],
+["Gallery","Kumpulan gambar yang ditata dalam grid.",`<div class="gl">${g.map(c=>`<div style="background:linear-gradient(135deg,${c})">🖼️</div>`).join("")}</div>`],
+["Lightbox","Tampilan gambar diperbesar di atas layar gelap saat gambar diklik.",`<div class="stage"><div class="gl" style="grid-template-columns:repeat(3,90px)">${g.slice(0,3).map((c,i)=>`<div data-lb="${c}" style="background:linear-gradient(135deg,${c})">🔍</div>`).join("")}</div><small>Klik salah satu gambar</small><div class="ov" id="lb" data-act="close"><div id="lbi" style="width:80%;max-width:320px;height:170px;border-radius:12px"></div></div></div>`],
+["Video Player","Pemutar video dengan kontrol putar, jeda, volume, dan layar penuh.",`<video controls style="width:100%;max-width:420px;background:#111;border-radius:10px;aspect-ratio:16/9"></video><br><small>Tambahkan atribut src berisi URL video.</small>`],
+["Audio Player","Pemutar suara dengan kontrol dasar untuk musik atau podcast.",`<audio controls></audio><br><small>Tambahkan atribut src berisi URL audio.</small>`],
+["Timeline","Urutan peristiwa berdasarkan waktu, ditampilkan secara vertikal atau horizontal.",`<div class="tl"><div><b>1991</b><small>Web pertama diluncurkan</small></div><div><b>1995</b><small>JavaScript lahir</small></div><div><b>2014</b><small>HTML5 dirilis</small></div></div>`],
+["Login","Halaman atau formulir untuk memasukkan email dan kata sandi agar pengguna bisa masuk.",`<div class="lg"><h4>Masuk</h4><label>Email</label><input type="email" placeholder="email@contoh.com"><label>Kata sandi</label><input type="password" placeholder="••••••••"><br><br><button style="width:100%">Masuk</button></div>`],
+["Dashboard","Halaman ringkasan yang menampilkan data penting seperti angka, grafik, dan status.",`<div class="dash"><div><small>Pengunjung</small><b>12.4K</b></div><div><small>Pesanan</small><b>342</b></div><div><small>Pendapatan</small><b>Rp 8,2jt</b></div><div><small>Konversi</small><b>3,8%</b></div></div>`],
+["Map","Peta interaktif atau tertanam yang menunjukkan lokasi, biasanya dari layanan seperti Google Maps.",`<svg viewBox="0 0 300 160" style="width:100%;max-width:380px;border-radius:10px"><rect width="300" height="160" fill="#cfe8d5"/><path d="M0 100 Q80 60 150 100 T300 80" stroke="#fff" stroke-width="10" fill="none"/><path d="M120 0 L160 160" stroke="#fff" stroke-width="6"/><path d="M150 40a14 14 0 1 1 .1 0L150 70z" fill="#dc2626" transform="translate(0,2)"/><circle cx="150" cy="40" r="5" fill="#fff"/></svg>`],
+["Rating","Komponen penilaian berbentuk bintang yang bisa dipilih pengguna.",`<div id="rt"></div><small id="rtx"></small>`]
+];
+const slug=t=>"s-"+t.toLowerCase().split(" /")[0].replace(/\s+/g,"");
+const app=document.getElementById("app"),nav=document.getElementById("nav");
+S.forEach((s,i)=>{const id=slug(s[0]);
+nav.insertAdjacentHTML("beforeend",`<a href="#${id}">${i+1}. ${s[0]}</a>`);
+app.insertAdjacentHTML("beforeend",`<section class="sec" id="${id}"><h2><small>${String(i+1).padStart(2,"0")}</small>${s[0]}</h2><p class="def">${s[1]}</p><div class="demo"><span class="lbl">Contoh</span>${s[2]}</div></section>`)});
+// pagination
+let pg=1;const rp=()=>{document.getElementById("pg").innerHTML=`<button data-p="-1">‹</button>`+[1,2,3,4,5].map(n=>`<button data-p="${n}" class="${n==pg?"on":""}">${n}</button>`).join("")+`<button data-p="+1">›</button>`};rp();
+// rating
+let rt=0;const rr=()=>{document.getElementById("rt").innerHTML=[1,2,3,4,5].map(n=>`<span class="star ${n<=rt?"on":""}" data-s="${n}">★</span>`).join("");document.getElementById("rtx").textContent=rt?`Kamu memberi ${rt} dari 5 bintang`:"Klik bintang untuk menilai"};rr();
+let tm;
+document.addEventListener("keydown",e=>{if(e.key=="Escape")document.querySelectorAll(".ov.on").forEach(o=>o.classList.remove("on"))});
+document.addEventListener("click",e=>{const t=e.target,q=s=>t.closest(s);
+const a=q("[data-act]");
+if(a){const k=a.dataset.act;
+if(k=="theme"){const r=document.documentElement,d=getComputedStyle(r).colorScheme=="dark";r.dataset.theme=d?"light":"dark"}
+if(k=="modal")document.getElementById("modal").classList.add("on");
+if(k=="close"&&(t==a||t.tagName=="BUTTON"))a.classList.remove("on"),document.getElementById("modal").classList.remove("on"),document.getElementById("lb").classList.remove("on");
+if(k=="toast"){const x=document.getElementById("toast");x.classList.add("on");clearTimeout(tm);tm=setTimeout(()=>x.classList.remove("on"),2200)}}
+if(t==document.getElementById("modal"))t.classList.remove("on");
+const l=q("[data-lb]");if(l){document.getElementById("lbi").style.background=`linear-gradient(135deg,${l.dataset.lb})`;document.getElementById("lb").classList.add("on")}
+const p=q("[data-p]");if(p){const v=p.dataset.p;pg=v=="-1"?Math.max(1,pg-1):v=="+1"?Math.min(5,pg+1):+v;rp()}
+const s=q("[data-s]");if(s){rt=+s.dataset.s;rr()}
+const tb=q("[data-tab]");if(tb){const w=tb.parentElement;w.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b==tb));[...w.parentElement.querySelectorAll(".tp")].forEach((x,i)=>x.classList.toggle("on",i==tb.dataset.tab))}
+});
+</script>
+</body>
+</html>
